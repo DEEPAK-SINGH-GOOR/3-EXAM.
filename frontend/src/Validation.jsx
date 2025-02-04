@@ -50,7 +50,7 @@ const CourseForm = () => {
                 <textarea placeholder="Course Description" {...register('description')} />
                 {errors.description && <p>{errors.description.message}</p>}
 
-                <input type="number" placeholder="Price" {...register('price', { valueAsNumber: true })} />
+                <input type="number" placeholder="Price" {...register('price')} />
                 {errors.price && <p>{errors.price.message}</p>}
 
                 <button type="submit">Add Course</button>
