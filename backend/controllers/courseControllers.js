@@ -2,32 +2,27 @@ const Course = require("../models/courseModel");
 
 const getCourses = async (req, res) => {
     const courses = await Course.find();
-    res.json(courses);
+    res.send(courses);
 };
 
 const addCourse = async (req, res) => {
-    try {
-        const courseData = new Course(req.body);
-        const savedCourse = await courseData.save();
-        res.status(201).json(savedCourse);
-    } catch (error) {
-        res.status(500).json({ message: "Error adding course", error });
+    const courseAdd = await Course.create(req.body);
+
+    if (courseAdd) {
+        res.send("Course added successfully");
+    } else {
+        res.send("Error adding course");
     }
 };
 
 const deleteCourse = async (req, res) => {
-    try {
-        const course = await Course.findByIdAndDelete(req.params.id);
+    const course = await Course.findByIdAndDelete(req.params.id);
 
-        if (!course) {
-            return res.status(404).json({ message: "Course not found" });
-        }
-
-        res.status(200).json({ message: "Course deleted successfully" });
-    } catch (err) {
-        res.status(500).send("Error deleting course");
+    if (course) {
+        res.send("Course deleted successfully");
+    } else {
+        res.send("Error deleting course");
     }
 };
-
 
 module.exports = { getCourses, addCourse, deleteCourse };
